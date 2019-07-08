@@ -5,14 +5,16 @@ public class Bar implements Collider {
     private Point secondPoint;
     private Point thirdPoint;
     private Point fourthPoint;
-    private Point[] points = {firstPoint,secondPoint,thirdPoint,fourthPoint};
-    public Bar(int firstCornerX, int firstCornerY, int secondCornerX, int secondCornerY){
+    private Point[] points = {firstPoint, secondPoint, thirdPoint, fourthPoint};
+
+    public Bar(int firstCornerX, int firstCornerY, int secondCornerX, int secondCornerY) {
         int ch;
-        if (firstCornerX > secondCornerX){
+        if (firstCornerX > secondCornerX) {
             ch = secondCornerX;
             secondCornerX = firstCornerX;
-            firstCornerX = ch;}
-        if (firstCornerY > secondCornerY){
+            firstCornerX = ch;
+        }
+        if (firstCornerY > secondCornerY) {
             ch = firstCornerY;
             firstCornerY = secondCornerY;
             secondCornerY = ch;
@@ -20,15 +22,13 @@ public class Bar implements Collider {
 
         this.firstPoint = new Point(firstCornerX,firstCornerY);
         this.thirdPoint = new Point(secondCornerX, secondCornerY);
-        if (firstCornerY < secondCornerY){
+        if (firstCornerY < secondCornerY) {
             this.secondPoint = new Point(firstCornerX,secondCornerY);
             this.fourthPoint = new Point(secondCornerX,firstCornerY);
-        }
-        else {
+        } else {
             this.secondPoint = new Point(secondCornerX,firstCornerY);
             this.fourthPoint = new Point(firstCornerX,secondCornerY);
         }
-
 
     }
 
@@ -55,53 +55,50 @@ public class Bar implements Collider {
     @Override
     public boolean isColliding(Collider other) {
         if (other instanceof Point) {
-            Point p = (Point) other;
-            return this.firstPoint.getX() <= p.getX() && p.getX() <= this.thirdPoint.getX() &&
-                    this.firstPoint.getY() <= p.getY() && p.getY() <= this.thirdPoint.getY();
+            Point point = (Point) other;
+            return this.firstPoint.getX() <= point.getX() && point.getX() <= this.thirdPoint.getX()
+                    && this.firstPoint.getY() <= point.getY() && point.getY() <= this.thirdPoint.getY();
         }
-        if (other instanceof Bar){
+        if (other instanceof Bar) {
             Bar bar = (Bar) other;
-            if (this.equals(bar)){ //если эвиваленты вернуть тру
+            if (this.equals(bar)) { //если эвиваленты вернуть тру
                 return true;
-            }
-            else if (this.firstPoint.getX() <= bar.getFirstPoint().getX() && // если один бар в другом баре
-                    this.firstPoint.getY() <= bar.getFirstPoint().getY() &&
-                    this.thirdPoint.getX() >= bar.getThirdPoint().getX() &&
-                    this.thirdPoint.getY() >= bar.getThirdPoint().getY()){
+            } else if (this.firstPoint.getX() <= bar.getFirstPoint().getX() // если один бар в другом баре
+                    && this.firstPoint.getY() <= bar.getFirstPoint().getY()
+                    && this.thirdPoint.getX() >= bar.getThirdPoint().getX()
+                    && this.thirdPoint.getY() >= bar.getThirdPoint().getY()) {
                 return true;
-            }
-            else if (this.isColliding(bar.getFirstPoint()) || //проерка на углы прямогулокников в обласити друг друга
-                    this.isColliding(bar.getSecondPoint()) ||
-                    this.isColliding(bar.getThirdPoint()) ||
-                    this.isColliding(bar.getFourthPoint()) ||
-                    bar.isColliding(this.firstPoint) ||
-                    bar.isColliding(this.secondPoint) ||
-                    bar.isColliding(this.thirdPoint) ||
-                    bar.isColliding(this.fourthPoint)){
+            } else if (this.isColliding(bar.getFirstPoint())  //проерка на углы прямогулокников в обласити друг друга
+                    || this.isColliding(bar.getSecondPoint())
+                    || this.isColliding(bar.getThirdPoint())
+                    || this.isColliding(bar.getFourthPoint())
+                    || bar.isColliding(this.firstPoint)
+                    || bar.isColliding(this.secondPoint)
+                    || bar.isColliding(this.thirdPoint)
+                    || bar.isColliding(this.fourthPoint)) {
                 return true;
-            }
-            else {
+            } else {
                 Bar b1;
                 Bar b2;
-                if (Math.abs(this.secondPoint.getY()-this.firstPoint.getY()) < Math.abs(bar.getSecondPoint().getY()-bar.getFirstPoint().getY())){
-                        b1 = this;
-                        b2 = bar;
+                if (Math.abs(this.secondPoint.getY() - this.firstPoint.getY())
+                        < Math.abs(bar.getSecondPoint().getY() - bar.getFirstPoint().getY())) {
+                    b1 = this;
+                    b2 = bar;
+                } else {
+                    b1 = bar;
+                    b2 = this;
                 }
-                else {
-                        b1 = bar;
-                        b2 = this;
-                    }
 
-                return b2.getFirstPoint().getX() >= b1.firstPoint.getX() &&
-                        b2.getThirdPoint().getX() >= b1.firstPoint.getX() &&
-                        b2.getFirstPoint().getX() <= b1.thirdPoint.getX() &&
-                        b2.getThirdPoint().getX() <= b1.thirdPoint.getX() &&
-                        b1.firstPoint.getY() >= b2.getFirstPoint().getY()   &&
-                        b1.thirdPoint.getY() >=  b2.getFirstPoint().getY() &&
-                        b1.firstPoint.getY() <= b2.getThirdPoint().getY()   &&
-                        b1.thirdPoint.getY() <=  b2.getThirdPoint().getY();
+                return b2.getFirstPoint().getX() >= b1.firstPoint.getX()
+                        && b2.getThirdPoint().getX() >= b1.firstPoint.getX()
+                        && b2.getFirstPoint().getX() <= b1.thirdPoint.getX()
+                        && b2.getThirdPoint().getX() <= b1.thirdPoint.getX()
+                        && b1.firstPoint.getY() >= b2.getFirstPoint().getY()
+                        && b1.thirdPoint.getY() >=  b2.getFirstPoint().getY()
+                        && b1.firstPoint.getY() <= b2.getThirdPoint().getY()
+                        && b1.thirdPoint.getY() <=  b2.getThirdPoint().getY();
 
-                }
+            }
 
 
 
@@ -119,22 +116,11 @@ public class Bar implements Collider {
         // cast from Object to Point
         Bar bar = (Bar) o;
 
-//        Math.abs(this.firstPoint.getX() - this.thirdPoint.getX()) == Math.abs(bar.firstPoint.getX() - bar.thirdPoint.getX()) &&
-//                Math.abs(this.firstPoint.getY() - this.thirdPoint.getY()) == Math.abs(bar.firstPoint.getY() - bar.thirdPoint.getY())
-        return  this.firstPoint.equals(bar.getFirstPoint()) &&
-                this.secondPoint.equals(bar.getSecondPoint()) &&
-                this.thirdPoint.equals(bar.getThirdPoint()) &&
-                this.fourthPoint.equals(bar.getFourthPoint());
+        return  this.firstPoint.equals(bar.getFirstPoint())
+                && this.secondPoint.equals(bar.getSecondPoint())
+                && this.thirdPoint.equals(bar.getThirdPoint())
+                && this.fourthPoint.equals(bar.getFourthPoint());
 
-//        for(int i=0;i<4;i++){
-//            for(int j=0;j<4;j++){
-//                if (this.points[i].equals(bar.getPoints()[j])){ continue; }
-//            }
-//
-//        }
-    //return true;
-//                this.firstPoint.equals(bar.getFirstPoint()) && this.secondPoint.equals(bar.getSecondPoint()) &&
-//                this.thirdPoint.equals(bar.getThirdPoint()) && this.fourthPoint.equals(bar.getFourthPoint());
     }
 
 }

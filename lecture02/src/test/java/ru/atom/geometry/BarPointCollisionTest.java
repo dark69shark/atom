@@ -50,11 +50,4 @@ public class BarPointCollisionTest {
         assertFalse(bar.isColliding(point));
     }
 
-    @Test
-    public void CheckCoolider() {
-        Point p = new Point(100,100);
-        assertTrue(p.equals(Geometry.createPoint(100, 100)));
-    }
-
-
 }

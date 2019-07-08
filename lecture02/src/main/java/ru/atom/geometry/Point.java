@@ -9,7 +9,7 @@ public class Point implements Collider/* super class and interfaces here if nece
     private int x;
     private int y;
 
-    public Point (int x, int y){
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -19,11 +19,13 @@ public class Point implements Collider/* super class and interfaces here if nece
         return this.equals(other);
     }
 
-    public int getX(){
+    public int getX() {
+
         return x;
     }
 
     public int getY() {
+
         return y;
     }
 
