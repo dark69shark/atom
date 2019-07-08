@@ -80,6 +80,32 @@ public class Bar implements Collider {
                     bar.isColliding(this.fourthPoint)){
                 return true;
             }
+            else {
+                Bar b1;
+                Bar b2;
+                if (Math.abs(this.secondPoint.getY()-this.firstPoint.getY()) < Math.abs(bar.getSecondPoint().getY()-bar.getFirstPoint().getY())){
+                        b1 = this;
+                        b2 = bar;
+                }
+                else {
+                        b1 = bar;
+                        b2 = this;
+                    }
+
+                return b2.getFirstPoint().getX() >= b1.firstPoint.getX() &&
+                        b2.getThirdPoint().getX() >= b1.firstPoint.getX() &&
+                        b2.getFirstPoint().getX() <= b1.thirdPoint.getX() &&
+                        b2.getThirdPoint().getX() <= b1.thirdPoint.getX() &&
+                        b1.firstPoint.getY() >= b2.getFirstPoint().getY()   &&
+                        b1.thirdPoint.getY() >=  b2.getFirstPoint().getY() &&
+                        b1.firstPoint.getY() <= b2.getThirdPoint().getY()   &&
+                        b1.thirdPoint.getY() <=  b2.getThirdPoint().getY();
+
+                }
+
+
+
+
         }
         return false;
     }
